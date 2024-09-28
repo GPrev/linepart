@@ -18,8 +18,10 @@ export class PuzzlePiece {
     return new PuzzlePiece(this.up(), this.left(), this.down(), this.right());
   }
 
-  getEdge(dir: Direction): number {
-    return this.edges[(dir + this.rotation) % Direction.NB_DIRECTIONS];
+  getEdge(dir: Direction, rotation = true): number {
+    return this.edges[
+      (dir + (rotation ? this.rotation : 0)) % Direction.NB_DIRECTIONS
+    ];
   }
   up(): number {
     return this.getEdge(Direction.UP);
@@ -32,6 +34,19 @@ export class PuzzlePiece {
   }
   left(): number {
     return this.getEdge(Direction.LEFT);
+  }
+
+  myup(): number {
+    return this.getEdge(Direction.UP, false);
+  }
+  myright(): number {
+    return this.getEdge(Direction.RIGHT, false);
+  }
+  mydown(): number {
+    return this.getEdge(Direction.DOWN, false);
+  }
+  myleft(): number {
+    return this.getEdge(Direction.LEFT, false);
   }
 
   setRotation(rotation: number) {
@@ -71,6 +86,7 @@ export class PuzzleState {
   }
 
   isSolved() {
+    if (!this) return false;
     for (const row of Array(this.height).keys()) {
       for (const col of Array(this.width).keys()) {
         if (
