@@ -16,6 +16,9 @@ class PuzzlePiece:
 
     def __str__(self) -> str:
         return f"<{self.left}^{self.up}{self.down}v{self.right}>"
+    
+    def rotate(self) -> None:
+        self.up, self.left, self.down, self.right = self.right, self.up, self.left, self.down
 
 class Puzzle:
     def __init__(self, vertical_edges:List[List[int]] = None, horizontal_edges:List[List[int]] = None, width:int = None, height:int = None, random_edgecount = 0) -> None:
@@ -45,6 +48,36 @@ class Puzzle:
             if row < self.height:
                 res += "\n" + "   ".join([f"{v}" for v in self.vertical_edges[row]])
         return res
-    
+   
 class RotationPuzzle(Puzzle):
         pass
+
+class RotationPuzzleAttempt:
+    def __init__(self, puzzle: RotationPuzzle) -> None:
+        self.puzzle = puzzle
+        self.pieces = puzzle.pieces
+
+    def __str__(self) -> str:
+        res = "RotationPuzzleAttempt :"
+        for row in self.pieces:
+            res += "\n" + "".join([f"|-{p.up}-|" for p in row])
+            res += "\n" + "".join([f"{p.left}   {p.right}" for p in row])
+            res += "\n" + "".join([f"|-{p.down}-|" for p in row])
+        return res
+
+    def randomize(self) -> None:
+        for row in self.pieces:
+            for piece in row:
+                for _ in range(random.randint(0, 3)):
+                    piece.rotate()
+    
+    def checkValidity(self):
+        for row in range(self.puzzle.height - 1):
+            for col in range(self.puzzle.width):
+                if self.pieces[row][col].down != self.pieces[row + 1][col].up:
+                    return False
+        for row in range(self.puzzle.height):
+            for col in range(self.puzzle.width - 1):
+                if self.pieces[row][col].right != self.pieces[row][col + 1].left:
+                    return False
+        return True
