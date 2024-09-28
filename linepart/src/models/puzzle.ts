@@ -34,6 +34,12 @@ export class PuzzlePiece {
     return this.getEdge(Direction.LEFT);
   }
 
+  setRotation(rotation: number) {
+    this.rotation = rotation % Direction.NB_DIRECTIONS;
+  }
+  addRotation() {
+    this.setRotation(this.rotation + 1);
+  }
   randomizeRotation() {
     this.rotation = Math.floor(Math.random() * Direction.NB_DIRECTIONS);
   }
@@ -46,10 +52,40 @@ export class PuzzleState {
     this.pieces = pieces;
   }
 
+  height() {
+    return this.pieces.length;
+  }
+
+  width() {
+    return this.pieces.length == 0 ? 0 : this.pieces[0].length;
+  }
+
   copy() {
     return new PuzzleState(
       this.pieces.map((row) => row.map((piece) => piece.copy()))
     );
+  }
+
+  *allPieces() {
+    for (const row of this.pieces) yield* row;
+  }
+
+  isSolved() {
+    for (const row of Array(this.height).keys()) {
+      for (const col of Array(this.width).keys()) {
+        if (
+          row + 1 < this.height() &&
+          this.pieces[row][col].down() != this.pieces[row + 1][col].up()
+        )
+          return false;
+        if (
+          col + 1 < this.width() &&
+          this.pieces[row][col].right() != this.pieces[row][col + 1].left()
+        )
+          return false;
+      }
+    }
+    return true;
   }
 
   randomizeAllRotations() {
@@ -59,19 +95,19 @@ export class PuzzleState {
   }
 
   static makeSolved(width: number, height: number, nb_different_edges: number) {
-    const vertical_edges = [...Array(height).keys()].map((_) =>
+    const vertical_edges = [...Array(height).keys()].map(() =>
       [...Array(width + 1).keys()].map(
-        (_) => 1 + Math.floor(Math.random() * nb_different_edges)
+        () => 1 + Math.floor(Math.random() * nb_different_edges)
       )
     );
-    const horizontal_edges = [...Array(height + 1).keys()].map((_) =>
+    const horizontal_edges = [...Array(height + 1).keys()].map(() =>
       [...Array(width).keys()].map(
-        (_) => 1 + Math.floor(Math.random() * nb_different_edges)
+        () => 1 + Math.floor(Math.random() * nb_different_edges)
       )
     );
 
     const pieces = [...Array(height).keys()].map((row) =>
-      [...Array(width + 1).keys()].map(
+      [...Array(width).keys()].map(
         (col) =>
           new PuzzlePiece(
             horizontal_edges[row][col],
@@ -102,5 +138,11 @@ export class RotationPuzzle extends Puzzle {
     const res = this.solution.copy();
     res.randomizeAllRotations();
     return res;
+  }
+
+  static makeRandom(width: number, height: number, nb_different_edges: number) {
+    return new RotationPuzzle(
+      PuzzleState.makeSolved(width, height, nb_different_edges)
+    );
   }
 }
