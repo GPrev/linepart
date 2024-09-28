@@ -6,6 +6,13 @@ export enum Direction {
   NB_DIRECTIONS = 4,
 }
 
+export const directions = [
+  Direction.UP,
+  Direction.LEFT,
+  Direction.DOWN,
+  Direction.RIGHT,
+];
+
 export class PuzzlePiece {
   edges: number[];
   rotation = 0;
