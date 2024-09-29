@@ -13,8 +13,8 @@ export class Coordinates {
     return new Coordinates(this.x, this.y);
   }
 
-  toSvg() {
-    return `${this.x},${this.y}`;
+  toSvg(scale: Coordinates = new Coordinates(1, 1)) {
+    return `${this.x * scale.x},${this.y * scale.y}`;
   }
 }
 
@@ -36,8 +36,10 @@ export class CubicCurve {
     this.endHandle = endHandle;
   }
 
-  toSvg() {
-    return `M ${this.startPoint.toSvg()} C ${this.startHandle.toSvg()} ${this.endHandle.toSvg()} ${this.endPoint.toSvg()}`;
+  toSvg(scale: Coordinates = new Coordinates(1, 1)) {
+    return `M ${this.startPoint.toSvg(scale)} C ${this.startHandle.toSvg(
+      scale
+    )} ${this.endHandle.toSvg(scale)} ${this.endPoint.toSvg(scale)}`;
   }
 }
 
@@ -46,6 +48,10 @@ export class SvgPiece {
 
   constructor(cubicCurves: CubicCurve[]) {
     this.cubicCurves = cubicCurves;
+  }
+
+  toSvg(scale: Coordinates = new Coordinates(1, 1)) {
+    return this.cubicCurves.map((c) => c.toSvg(scale)).join(' ');
   }
 }
 

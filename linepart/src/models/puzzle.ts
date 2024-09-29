@@ -17,7 +17,7 @@ export class PuzzlePiece {
   edges: number[];
   rotation = 0;
 
-  constructor(up: number, left: number, down: number, right: number) {
+  constructor(up = 0, left = 0, down = 0, right = 0) {
     this.edges = [up, left, down, right];
   }
 
