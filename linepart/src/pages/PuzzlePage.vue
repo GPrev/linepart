@@ -14,7 +14,7 @@ import { PuzzleThemeA } from 'src/models/puzzletheme';
 const puzzle = ref(RotationPuzzle.makeRandom(3, 3, 8))
 const puzzleState = ref(puzzle.value.makeRandomStartingState())
 
-const scale = ref(50)
+const scale = ref(100)
 const theme = ref(new PuzzleThemeA())
 
 const isSolved = computed(() => {
