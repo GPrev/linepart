@@ -32,7 +32,7 @@ describe('PuzzleThemeA', () => {
     );
   });
   it('should make corners', () => {
-    const piece = new PuzzlePiece(4, 1, 0, 0);
+    const piece = new PuzzlePiece(1, 1, 0, 0);
     const svg = theme.toSvg(piece);
     expect(svg.cubicCurves).toHaveLength(1);
     expect(svg.cubicCurves[0]).toEqual(
@@ -43,5 +43,38 @@ describe('PuzzleThemeA', () => {
         new Coordinates(0.25, 0.25)
       )
     );
+  });
+  it('should make complex shapes', () => {
+    const piece = new PuzzlePiece(2, 5, 7, 6);
+    const svg = theme.toSvg(piece);
+    expect(svg.cubicCurves).toHaveLength(4);
+    for (const curve of [
+      {
+        endHandle: { x: 0.25, y: 0.75 },
+        endPoint: { x: 0.25, y: 1 },
+        startHandle: { x: 0.25, y: 0.75 },
+        startPoint: { x: 0, y: 0.75 },
+      },
+      {
+        endHandle: { x: 0.75, y: 0.75 },
+        endPoint: { x: 1, y: 0.75 },
+        startHandle: { x: 0.75, y: 0.75 },
+        startPoint: { x: 0.75, y: 1 },
+      },
+      {
+        endHandle: { x: 0.5, y: 0.25 },
+        endPoint: { x: 0.5, y: 0 },
+        startHandle: { x: 0.25, y: 0.25 },
+        startPoint: { x: 0, y: 0.25 },
+      },
+      {
+        endHandle: { x: 0.75, y: 0.5 },
+        endPoint: { x: 1, y: 0.5 },
+        startHandle: { x: 0.5, y: 0.75 },
+        startPoint: { x: 0.5, y: 1 },
+      },
+    ]) {
+      expect(svg.cubicCurves).toContainEqual(curve);
+    }
   });
 });

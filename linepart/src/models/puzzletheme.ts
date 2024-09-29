@@ -1,4 +1,4 @@
-import { directions, PuzzlePiece } from 'src/models/puzzle';
+import { Direction, directions, PuzzlePiece } from 'src/models/puzzle';
 
 export class Coordinates {
   x: number;
@@ -95,7 +95,11 @@ export class PuzzleThemeA implements PuzzleTheme {
     for (const dir of directions) {
       const edge = piece.getEdge(dir, false);
       for (const idx of [0, 1, 2]) {
-        if ((edge & (1 << idx)) != 0) activePoints.push(3 * dir + idx);
+        // For UP and RIGHT, reverse the point order so that it matches the opposite side
+        const newIdx = [Direction.UP, Direction.RIGHT].includes(dir)
+          ? 2 - idx
+          : idx;
+        if ((edge & (1 << idx)) != 0) activePoints.push(3 * dir + newIdx);
       }
     }
 
