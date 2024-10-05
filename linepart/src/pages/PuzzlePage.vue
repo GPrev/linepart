@@ -1,12 +1,22 @@
 <template>
-  <q-page class="column content-center justify-center">
+  <q-page class="column content-center justify-center items-center">
     <q-btn class="topleft" href="/" flat round color="primary" icon="arrow_back" />
-    <PuzzleGridView :puzzle="puzzleState" :theme="theme" :scale="scale" />
+    <PuzzleGridView :puzzle="puzzleState" :theme="theme" :scale="scale" :isLocked="isSolved" />
     <div v-if="test">
       <br />
       <p>{{ isSolved }}</p>
       <PuzzleGridView :puzzle="puzzleState" :scale="scale" />
     </div>
+    <q-card v-if="isSolved" class="q-my-md bg-green-2">
+      <q-card-section>
+        <p class="text-h6">Congratulations !</p>
+        <p class="q-ma-none">You did it !</p>
+      </q-card-section>
+      <q-card-actions>
+        <q-btn outline color="primary" tag="a" href="/puzzle">New puzzle</q-btn>
+        <q-btn outline color="primary" tag="a" href="/">Main menu</q-btn>
+      </q-card-actions>
+    </q-card>
   </q-page>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <div v-if="piece" v-ripple class="relative-position container flex flex-center cursor-pointer"
-    :style="{ color: lineColor }" @click="piece.addRotation">
+    :style="{ color: lineColor }" @click="() => { if (!isLocked) piece?.addRotation() }">
     <svg v-if="theme" :style="pieceStyle">
       <path :d="svgPath" :style="pathStyle" />
     </svg>
@@ -23,13 +23,14 @@ import { PuzzlePiece } from 'src/models/puzzle';
 import { Coordinates, PuzzleTheme } from 'src/models/puzzletheme';
 
 const {
-  piece = null, theme = null, scale = 100, pieceColor = '#ffffff', lineColor = '#000000'
+  piece = null, theme = null, scale = 100, pieceColor = '#ffffff', lineColor = '#000000', isLocked = false
 } = defineProps<{
   piece: PuzzlePiece | null;
   theme?: PuzzleTheme | null;
   scale?: number;
   pieceColor?: string;
   lineColor?: string;
+  isLocked?: boolean
 }>();
 
 const scaleVector = computed(() => {
