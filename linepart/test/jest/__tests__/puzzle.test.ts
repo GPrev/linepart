@@ -1,5 +1,10 @@
 import { describe, expect, it } from '@jest/globals';
-import { PuzzlePiece, PuzzleState, RotationPuzzle } from 'src/models/puzzle';
+import {
+  Direction,
+  PuzzlePiece,
+  PuzzleState,
+  RotationPuzzle,
+} from 'src/models/puzzle';
 
 describe('PuzzlePiece', () => {
   it('should rotate', () => {
@@ -81,9 +86,20 @@ describe('RotationPuzzle', () => {
   it('should check if solved', () => {
     const puzzle = RotationPuzzle.makeRandom(width, height, nbDiffEdges);
     expect(puzzle.solution.isSolved()).toBeTruthy();
-    const notSolved = puzzle.solution.copy();
+    let notSolved = puzzle.solution.copy();
     // Values intentionnaly too big, can't be correct
     notSolved.pieces[0][0].edges = [9, 9, 9, 9];
+    expect(notSolved.isSolved()).toBeFalsy();
+    // Test the bottom right square
+    notSolved = puzzle.solution.copy();
+    notSolved.pieces[height - 1][width - 1].edges[Direction.DOWN] = 9;
+    expect(puzzle.solution.isSolved()).toBeTruthy();
+    notSolved.pieces[height - 1][width - 1].edges[Direction.RIGHT] = 9;
+    expect(puzzle.solution.isSolved()).toBeTruthy();
+    notSolved.pieces[height - 1][width - 1].edges[Direction.UP] = 9;
+    expect(notSolved.isSolved()).toBeFalsy();
+    notSolved = puzzle.solution.copy();
+    notSolved.pieces[height - 1][width - 1].edges[Direction.LEFT] = 9;
     expect(notSolved.isSolved()).toBeFalsy();
   });
 

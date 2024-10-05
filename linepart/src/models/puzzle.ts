@@ -94,8 +94,8 @@ export class PuzzleState {
 
   isSolved() {
     if (!this) return false;
-    for (const row of Array(this.height).keys()) {
-      for (const col of Array(this.width).keys()) {
+    for (const row of Array(this.height()).keys()) {
+      for (const col of Array(this.width()).keys()) {
         if (
           row + 1 < this.height() &&
           this.pieces[row][col].down() != this.pieces[row + 1][col].up()
