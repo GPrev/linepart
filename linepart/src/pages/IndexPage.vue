@@ -1,13 +1,17 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <q-btn tag="a" href="puzzle">Play</q-btn>
+  <q-page class="column content-center justify-center">
+    <TitlePuzzle />
+    <div class="spacer" />
+    <q-btn color="primary" tag="a" href="puzzle">Play</q-btn>
   </q-page>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<style lang="css">
+.spacer {
+  padding: 1em;
+}
+</style>
 
-export default defineComponent({
-  name: 'IndexPage',
-});
+<script setup lang="ts">
+import TitlePuzzle from 'src/components/TitlePuzzle.vue';
 </script>

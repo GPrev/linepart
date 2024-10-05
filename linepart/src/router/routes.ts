@@ -3,7 +3,7 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () => import('layouts/MinmalLayout.vue'),
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
       { path: 'puzzle', component: () => import('pages/PuzzlePage.vue') },
