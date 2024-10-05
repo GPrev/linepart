@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { PuzzlePiece } from 'src/models/puzzle';
 import { Coordinates, PuzzleTheme } from 'src/models/puzzletheme';
 
@@ -50,7 +50,9 @@ const pieceStyle = computed(() => {
     height: `${scale || 50}px`,
     background: pieceColor,
     color: lineColor,
-    transform: `rotate(${90 * (piece?.rotation || 0)}deg)`
+    transform: `rotate(${rotationValue.value}deg)`,
+    'transition-duration': '0.2s',
+    'transition-property': 'transform',
   }
 });
 
@@ -61,4 +63,16 @@ const pathStyle = computed(() => {
     fill: 'none',
   }
 })
+
+function closestEquivalentAngle (from: number, to: number) {
+  var delta = ((((to - from) % 360) + 540) % 360) - 180;
+  return from + delta;
+}
+
+const rotationValue = ref(90 * (piece?.rotation || 0))
+watch(() => piece?.rotation, (newRotation) => {
+  const newAngle = 90 * (newRotation || 0)
+  rotationValue.value = closestEquivalentAngle(rotationValue.value, newAngle)
+})
+
 </script>
