@@ -124,19 +124,30 @@ class RotationPuzzleAttempt:
                     return False
         return True
 
+class PuzzleStatistics:
+    def __init__(self, solutions, steps) -> None:
+        self.solutions = solutions
+        self.steps = steps
+        self.makeStats()
+    
+    def makeStats(self):
+        self.stepStats = [[[len(piece) for row in step for piece in row].count(dir + 1) for dir in Direction.ALL] for step in self.steps]
+        self.difficultyIndex = sum([(dir) * n for stepStat in self.stepStats for dir, n in enumerate(stepStat)])
+
 class RotationPuzzleSolver:
     def analyze(self, puzzle: RotationPuzzle):
-        return {
-            "solutions": self.findAllSolutions(puzzle)
-        }
+        solutions, steps = self.findAllSolutions(puzzle)
+        return PuzzleStatistics(solutions, steps)
     
     def findAllSolutions(self, puzzle: RotationPuzzle):
+        solverSteps = []
         validAngles = [[self.findValidAngles(puzzle, row, col) for col in range(puzzle.width)] for row in range(puzzle.height)]
         oldValidAngles = None
         while validAngles != oldValidAngles:
+            solverSteps.append(validAngles)
             oldValidAngles = validAngles
             validAngles = [[self.findValidAngles(puzzle, row, col, oldValidAngles) for col in range(puzzle.width)] for row in range(puzzle.height)]
-        return self.makeSolutions(puzzle, validAngles)
+        return self.makeSolutions(puzzle, validAngles), solverSteps
     
     def makeSolutions(self, puzzle: RotationPuzzle, validAngles: List[List[List[int]]], row = 0, col = 0, attempt: RotationPuzzleAttempt = None):
         if col >= puzzle.width:
