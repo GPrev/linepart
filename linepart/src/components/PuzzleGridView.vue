@@ -1,12 +1,16 @@
 <template>
-  <div v-if="puzzle" :style="{
+  <q-card v-if="puzzle" :style="{
     'display': 'grid',
     'grid-template-columns': `repeat(${puzzle.width()}, ${scale}px)`,
     'grid-auto-rows': `${scale}px`,
+    'grid-column-gap': `${scale / 15}px`,
+    'grid-row-gap': `${scale / 15}px`,
+    'background': 'dimgray',
+    'padding': `${scale / 10}px`,
   }">
     <PuzzlePieceView v-for="(piece, index) in puzzle.allPieces()" :key="index" :piece="piece" :theme="theme"
       :scale="scale" :piece-color="pieceColor" :line-color="lineColor" :isLocked="isLocked" />
-  </div>
+  </q-card>
 </template>
 
 <script setup lang="ts">

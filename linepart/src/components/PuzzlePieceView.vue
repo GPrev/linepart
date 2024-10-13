@@ -1,7 +1,7 @@
 <template>
-  <div v-if="piece" v-ripple class="relative-position container flex flex-center cursor-pointer"
-    :style="{ color: lineColor }" @click="() => { if (!isLocked) piece?.addRotation() }">
-    <svg v-if="theme" :style="pieceStyle">
+  <div v-if="piece" class="piece relative-position container flex flex-center cursor-pointer"
+    :style="pieceStyle" @click="() => { if (!isLocked) piece?.addRotation() }">
+    <svg v-if="theme">
       <path :d="svgPath" :style="pathStyle" />
     </svg>
     <div v-else :style="pieceStyle">
@@ -16,6 +16,27 @@
     xxx
   </div>
 </template>
+
+<style lang="css">
+.piece::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: v-bind(lineColor);
+    opacity: 0;
+}
+.piece:active:after {
+  animation: piece-clicked .2s ease-in
+}
+@keyframes piece-clicked {
+  from {
+  opacity: .5;
+  }
+}
+</style>
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
@@ -46,8 +67,10 @@ const svgPath = computed(() => {
 
 const pieceStyle = computed(() => {
   return {
-    width: `${scale || 50}px`,
-    height: `${scale || 50}px`,
+    width: `${scale}px`,
+    height: `${scale}px`,
+    'border-radius': `${scale / 10}px`,
+    overflow: 'hidden',
     background: pieceColor,
     color: lineColor,
     transform: `rotate(${rotationValue.value}deg)`,
