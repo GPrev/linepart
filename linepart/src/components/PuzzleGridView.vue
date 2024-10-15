@@ -1,17 +1,22 @@
 <template>
-  <q-card v-if="puzzle" :style="{
-    'display': 'grid',
-    'grid-template-columns': `repeat(${puzzle.width()}, ${scale}px)`,
-    'grid-auto-rows': `${scale}px`,
-    'grid-column-gap': `${scale / 15}px`,
-    'grid-row-gap': `${scale / 15}px`,
-    'background': 'dimgray',
-    'padding': `${scale / 10}px`,
-  }">
+  <div v-if="puzzle" class="puzzle shadow">
     <PuzzlePieceView v-for="(piece, index) in puzzle.allPieces()" :key="index" :piece="piece" :theme="theme"
       :scale="scale" :piece-color="pieceColor" :line-color="lineColor" :isLocked="isLocked" />
-  </q-card>
+  </div>
 </template>
+
+<style lang="css">
+.puzzle {
+  display: grid;
+  grid-template-columns: v-bind('`repeat(${puzzle?.width()}, ${scale}px)`');
+  grid-auto-rows: v-bind('scale + "px"');
+  grid-column-gap: v-bind('scale / 15 + "px"');
+  grid-row-gap: v-bind('scale / 15 + "px"');
+  background: dimgray;
+  padding: v-bind('scale / 10 + "px"');
+  border-radius: v-bind('scale / 10 + "px"');
+}
+</style>
 
 <script setup lang="ts">
 import { ref } from 'vue';

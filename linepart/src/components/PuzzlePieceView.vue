@@ -1,10 +1,10 @@
 <template>
   <div v-if="piece" class="piece relative-position container flex flex-center cursor-pointer"
-    :style="pieceStyle" @click="() => { if (!isLocked) piece?.addRotation() }">
+    @click="() => { if (!isLocked) piece?.addRotation() }">
     <svg v-if="theme">
-      <path :d="svgPath" :style="pathStyle" />
+      <path :d="svgPath" class="path" />
     </svg>
-    <div v-else :style="pieceStyle">
+    <div v-else>
       x{{ piece.myup() }}x<br />
       {{ piece.myleft() }} {{ piece.myright() }}<br />
       x{{ piece.mydown() }}x
@@ -18,22 +18,42 @@
 </template>
 
 <style lang="css">
-.piece::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: v-bind(lineColor);
-    opacity: 0;
+.path {
+  stroke: v-bind(lineColor);
+  stroke-width: v-bind(scale / 10);
+  fill: none;
 }
+
+.piece {
+  width: v-bind(scale);
+  height: v-bind(scale);
+  border-radius: v-bind('scale / 10 + "px"');
+  overflow: hidden;
+  background: v-bind(pieceColor);
+  color: v-bind(lineColor);
+  transform: v-bind('"rotate(" + rotationValue + "deg)"');
+  transition-duration: 0.2s;
+  transition-property: transform;
+}
+
+.piece::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: v-bind(lineColor);
+  opacity: 0;
+}
+
 .piece:active:after {
   animation: piece-clicked .2s ease-in
 }
+
 @keyframes piece-clicked {
   from {
-  opacity: .5;
+    opacity: .5;
   }
 }
 </style>
@@ -64,28 +84,6 @@ const svgPath = computed(() => {
   }
   return ''
 });
-
-const pieceStyle = computed(() => {
-  return {
-    width: `${scale}px`,
-    height: `${scale}px`,
-    'border-radius': `${scale / 10}px`,
-    overflow: 'hidden',
-    background: pieceColor,
-    color: lineColor,
-    transform: `rotate(${rotationValue.value}deg)`,
-    'transition-duration': '0.2s',
-    'transition-property': 'transform',
-  }
-});
-
-const pathStyle = computed(() => {
-  return {
-    stroke: lineColor,
-    'stroke-width': scale / 10,
-    fill: 'none',
-  }
-})
 
 function closestEquivalentAngle (from: number, to: number) {
   var delta = ((((to - from) % 360) + 540) % 360) - 180;
