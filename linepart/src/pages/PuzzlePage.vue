@@ -7,16 +7,18 @@
       <p>{{ isSolved }}</p>
       <PuzzleGridView :puzzle="puzzleState" :scale="scale" />
     </div>
-    <q-card v-if="isSolved" class="q-my-md bg-green-2">
-      <q-card-section>
-        <p class="text-h6">Congratulations !</p>
-        <p class="q-ma-none">You did it !</p>
-      </q-card-section>
-      <q-card-actions>
-        <q-btn outline color="primary" tag="a" href="/puzzle">New puzzle</q-btn>
-        <q-btn outline color="primary" tag="a" href="/">Main menu</q-btn>
-      </q-card-actions>
-    </q-card>
+    <div :class="[{ ['win']: isSolved }, 'popup-container']">
+      <q-card v-if="isSolved" :class="[{ ['win']: isSolved }, 'win-popup', 'q-my-md', 'bg-green-2']">
+        <q-card-section>
+          <p class="text-h6">Congratulations !</p>
+          <p class="q-ma-none">You did it !</p>
+        </q-card-section>
+        <q-card-actions>
+          <q-btn outline color="primary" tag="a" href="/puzzle">New puzzle</q-btn>
+          <q-btn outline color="primary" tag="a" href="/">Main menu</q-btn>
+        </q-card-actions>
+      </q-card>
+    </div>
   </q-page>
 </template>
 
@@ -26,10 +28,48 @@
   top: 0px;
   left: 0px;
 }
+
+.win-popup {
+  transform: scale(0);
+}
+
+.win-popup.win {
+  animation: popup-on-win .5s ease-in;
+  animation-delay: .5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes popup-on-win {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.popup-container {
+  height: 0;
+}
+
+.popup-container.win {
+  animation: container-on-win .5s ease-in;
+  animation-delay: .5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes container-on-win {
+  to {
+    height: 100px;
+  }
+}
 </style>
 
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue';
+import { ref, computed } from 'vue';
 import PuzzleGridView from '../components/PuzzleGridView.vue';
 import { RotationPuzzle } from 'src/models/puzzle';
 import { PuzzleThemeA } from 'src/models/puzzletheme';
@@ -45,11 +85,4 @@ const test = ref(false)
 const isSolved = computed(() => {
   return puzzleState.value.isSolved();
 });
-
-watch(isSolved, async (isSolved) => {
-  if (isSolved)
-    console.log('Puzzle solved !')
-}, {
-  immediate: true
-})
 </script>

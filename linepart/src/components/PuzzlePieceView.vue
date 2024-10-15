@@ -34,6 +34,7 @@
   transform: v-bind('"rotate(" + rotationValue + "deg)"');
   transition-duration: 0.2s;
   transition-property: transform;
+  transition-timing-function: ease-out;
 }
 
 .piece::after {
@@ -48,12 +49,12 @@
 }
 
 .piece:active:after {
-  animation: piece-clicked .2s ease-in
+  animation: piece-clicked .5s ease-out
 }
 
 @keyframes piece-clicked {
   from {
-    opacity: .5;
+    opacity: .3;
   }
 }
 </style>
