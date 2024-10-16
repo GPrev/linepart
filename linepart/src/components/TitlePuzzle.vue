@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PuzzleGridView :puzzle="puzzle" :theme="theme" :scale="scale" />
+    <PuzzleGridView :puzzle="puzzle" :theme="theme" :scale="scale" :piece-color="pieceColor" :line-color="lineColor" />
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 import { ref } from 'vue';
 import PuzzleGridView from './PuzzleGridView.vue';
 import { PuzzlePiece, PuzzleState } from 'src/models/puzzle';
-import { PuzzleThemeA } from 'src/models/puzzletheme';
+import { PuzzleTheme, PuzzleThemeA } from 'src/models/puzzletheme';
 
 const puzzle = ref(new PuzzleState([
   [[4, 0, 4, 0], [0, 0, 2, 0], [0, 0, 5, 0], [0, 0, 4, 4], [0, 4, 1, 0], [0, 0, 0, 0]],
@@ -18,6 +18,12 @@ const puzzle = ref(new PuzzleState([
 ].map(r => r.map(p => new PuzzlePiece(...p))))
 )
 
-const scale = ref(40)
-const theme = ref(new PuzzleThemeA())
+const {
+  theme = new PuzzleThemeA(), scale = 40, pieceColor = '#ffffff', lineColor = '#000000'
+} = defineProps<{
+  theme?: PuzzleTheme;
+  scale?: number;
+  pieceColor?: string;
+  lineColor?: string;
+}>();
 </script>

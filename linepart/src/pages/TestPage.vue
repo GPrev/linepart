@@ -1,5 +1,6 @@
 <template>
   <q-page padding>
+    <WinBoxView />
     <q-input v-model.number="scale" type="number" label="Scale" />
     <q-input v-model.number="piece.edges[0]" type="number" />
     <q-input v-model.number="piece.edges[1]" type="number" />
@@ -12,6 +13,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import PuzzlePieceView from 'src/components/PuzzlePieceView.vue';
+import WinBoxView from '../components/WinBoxView.vue';
 import { PuzzlePiece } from 'src/models/puzzle';
 import { PuzzleThemeA } from 'src/models/puzzletheme';
 

@@ -1,23 +1,16 @@
 <template>
   <q-page class="column content-center justify-center items-center">
-    <q-btn class="topleft" href="/" flat round color="primary" icon="arrow_back" />
-    <PuzzleGridView :puzzle="puzzleState" :theme="theme" :scale="scale" :isLocked="isSolved" />
+    <q-btn class="back-btn topleft" href="/" flat round icon="arrow_back" />
+    <PuzzleGridView :puzzle="puzzleState" :theme="theme" :scale="scale" :piece-color="pieceColor"
+      :line-color="lineColor" :isLocked="isSolved" />
     <div v-if="test">
       <br />
       <p>{{ isSolved }}</p>
       <PuzzleGridView :puzzle="puzzleState" :scale="scale" />
     </div>
     <div :class="[{ ['win']: isSolved }, 'popup-container']">
-      <q-card v-if="isSolved" :class="[{ ['win']: isSolved }, 'win-popup', 'q-my-md', 'bg-green-2']">
-        <q-card-section>
-          <p class="text-h6">Congratulations !</p>
-          <p class="q-ma-none">You did it !</p>
-        </q-card-section>
-        <q-card-actions>
-          <q-btn outline color="primary" tag="a" href="/puzzle">New puzzle</q-btn>
-          <q-btn outline color="primary" tag="a" href="/">Main menu</q-btn>
-        </q-card-actions>
-      </q-card>
+      <WinBoxView v-if="isSolved" :class="[{ ['win']: isSolved }, 'win-popup']" :theme="theme" :piece-color="pieceColor"
+        :line-color="lineColor" :scale="scale" />
     </div>
   </q-page>
 </template>
@@ -27,6 +20,10 @@
   position: absolute;
   top: 0px;
   left: 0px;
+}
+
+.back-btn {
+  color: v-bind(pieceColor);
 }
 
 .win-popup {
@@ -71,6 +68,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import PuzzleGridView from '../components/PuzzleGridView.vue';
+import WinBoxView from '../components/WinBoxView.vue';
 import { RotationPuzzle } from 'src/models/puzzle';
 import { PuzzleThemeA } from 'src/models/puzzletheme';
 
@@ -79,6 +77,8 @@ const puzzleState = ref(puzzle.value.makeRandomStartingState())
 
 const scale = ref(100)
 const theme = ref(new PuzzleThemeA())
+const pieceColor = ref('#333333')
+const lineColor = ref('#eeeeaa')
 
 const test = ref(false)
 
