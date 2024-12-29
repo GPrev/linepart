@@ -1,6 +1,6 @@
 <template>
   <div class="column content-center justify-center items-center">
-    <RouterLink to="/" class=" back-btn topleft" round icon="arrow_back" />
+    <RouterLink to="/" class=" round button topleft ma-xs">◀</RouterLink>
     <PuzzleGridView :puzzle="puzzleState" :theme="theme" :scale="scale" :piece-color="pieceColor"
       :line-color="lineColor" :isLocked="isSolved" />
     <div v-if="test">
@@ -16,16 +16,6 @@
 </template>
 
 <style lang="css">
-.topleft {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-}
-
-.back-btn {
-  color: v-bind(pieceColor);
-}
-
 .win-popup {
   transform: scale(0);
 }

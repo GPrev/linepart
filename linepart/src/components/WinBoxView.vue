@@ -1,16 +1,16 @@
 <template>
-  <div class="winbox q-my-md shadow">
+  <div class="winbox my-md shadow">
     <svg class="win-svg left">
       <path d="M 20 0 C 20 60 100 90 100 150" />
     </svg>
     <svg class="win-svg right">
       <path d="M 20 0 C 20 60 100 90 100 150" />
     </svg>
-    <p class="text-h6 q-ma-xs">Congratulations !</p>
-    <p class="q-ma-none">You did it !</p>
-    <div class="row content-around">
-      <q-btn class="button" outline :color="lineColor" tag="a" href="/puzzle">New puzzle</q-btn>
-      <q-btn class="button" outline :color="lineColor" tag="a" href="/">Main menu</q-btn>
+    <p class="text-h6 ma-xs">Congratulations !</p>
+    <p class="ma-none">You did it !</p>
+    <div class="win-button-row row content-around">
+      <RouterLink to="/puzzle" class="button">New puzzle</RouterLink>
+      <RouterLink to="/" class="button">Main menu</RouterLink>
     </div>
   </div>
 </template>
@@ -28,18 +28,23 @@
   overflow: hidden;
 }
 
-.button {
+.winbox div .button {
+  position: relative;
+  z-index: 1;
   margin: 10px;
+  border: solid 1px var(--main-button-color);
+  background-color: transparent;
 }
 
-.button::before {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: v-bind(pieceColor);
-  opacity: .8;
+.winbox div .button::after {
+  background-color: var(--main-background-color);
+  opacity: 0.8;
+  z-index: -1;
+}
+
+.winbox div .button:hover:after {
+  background-color: var(--main-button-color);
+  opacity: 0.2;
 }
 
 .win-svg {
@@ -47,6 +52,7 @@
   top: 50%;
   opacity: .3;
   translate: 0 -50%;
+  pointer-events: none;
 }
 
 .win-svg.left {

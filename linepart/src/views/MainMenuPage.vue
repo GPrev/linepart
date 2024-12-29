@@ -2,18 +2,14 @@
   <div class="column content-center justify-center">
     <TitlePuzzle :piece-color="pieceColor" :line-color="lineColor" />
     <div class="spacer" />
-    <RouterLink to="/puzzle" class="button">Play</RouterLink>
+    <RouterLink to="/puzzle" class="button">
+      Play</RouterLink>
   </div>
 </template>
 
 <style lang="css">
 .spacer {
   padding: 1em;
-}
-
-.button {
-  color: v-bind(lineColor);
-  background-color: v-bind(pieceColor);
 }
 </style>
 

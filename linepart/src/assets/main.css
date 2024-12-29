@@ -7,29 +7,101 @@
   font-weight: normal;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
 @media (min-width: 1024px) {
   body {
     display: flex;
     place-items: center;
   }
+}
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+:root {
+  --main-button-color: #eeeeaa;
+  --main-text-color: #333333;
+  --main-background-color: #333333;
+}
+
+.content-center {
+  align-content: center;
+}
+.justify-center, .flex-center {
+  justify-content: center;
+}
+.items-center, .flex-center {
+  align-items: center;
+}
+.column {
+  flex-direction: column;
+}
+.row {
+  flex-direction: row;
+}
+.row, .column, .flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.text-center {
+  text-align: center;
+}
+
+.ma-xs {
+  margin: 4px 4px;
+}
+.my-md {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+.ma-none {
+  margin: 0 0;
+}
+
+.text-h6 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 2rem;
+  letter-spacing: 0.0125em;
+}
+
+.button {
+  position: relative;
+  padding: 4px 16px;
+  min-height: 2.572em;
+  overflow: hidden;
+  text-align: center;
+  align-content: center;
+  border-radius: 3px;
+  color: var(--main-button-color);
+  background-color: var(--main-background-color);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12);
+  outline: 0 !important;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-decoration: none;
+  user-select: none !important;
+  cursor: pointer;
+}
+
+.button::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+}
+
+.button:hover:after {
+  background-color: var(--main-button-color);
+  opacity: 0.2;
+}
+
+.round {
+  border-radius: 50%;
+  aspect-ratio: 1 / 1
+}
+
+.topleft {
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
