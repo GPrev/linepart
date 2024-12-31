@@ -18,12 +18,12 @@
 }
 
 .puzzle.win {
-  animation: puzzle-on-win .5s ease-in;
+  animation: v-bind('`puzzle-on-win ${(isAnimated ? ".5s" : "0s")} ease-in`');
   animation-fill-mode: forwards;
 }
 
 .puzzle.win .piece {
-  animation: piece-on-win .5s ease-in;
+  animation: v-bind('`piece-on-win ${(isAnimated ? ".5s" : "0s")} ease-in`');
   animation-fill-mode: forwards;
 }
 
@@ -49,7 +49,7 @@ import { PuzzleState } from '/src/models/puzzle';
 import { PuzzleTheme } from '/src/models/puzzletheme';
 
 const {
-  puzzle = null, theme = null, scale = 100, pieceColor = '#ffffff', lineColor = '#000000', isLocked = false
+  puzzle = null, theme = null, scale = 100, pieceColor = '#ffffff', lineColor = '#000000', isLocked = false, isAnimated = true
 } = defineProps<{
   puzzle: PuzzleState | null;
   theme?: PuzzleTheme | null;
@@ -57,5 +57,6 @@ const {
   pieceColor?: string;
   lineColor?: string;
   isLocked?: boolean
+  isAnimated?: boolean
 }>();
 </script>
