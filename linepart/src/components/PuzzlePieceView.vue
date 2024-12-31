@@ -61,8 +61,8 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { PuzzlePiece } from '/src/models/puzzle';
-import { Coordinates, PuzzleTheme } from '/src/models/puzzletheme';
+import { PuzzlePiece } from '@/models/puzzle';
+import { Coordinates, type PuzzleTheme } from '@/models/puzzletheme';
 
 const {
   piece = null, theme = null, scale = 100, pieceColor = '#ffffff', lineColor = '#000000', isLocked = false

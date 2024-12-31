@@ -4,7 +4,7 @@ import {
   PuzzlePiece,
   PuzzleState,
   RotationPuzzle,
-} from '../models/puzzle'
+} from '@/models/puzzle'
 
 describe('PuzzlePiece', () => {
   it('should rotate', () => {
@@ -29,7 +29,8 @@ describe('PuzzleState', () => {
   it('should have all pieces', () => {
     const puzzle = PuzzleState.makeSolved(width, height, nbDiffEdges)
     let count = 0
-    for (const _ of puzzle.allPieces()) count++
+    const it = puzzle.allPieces()
+    while (!it.next().done) count++
     expect(count).toBe(pieceNumber)
   })
 })

@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import TitlePuzzle from '/src/components/TitlePuzzle.vue';
+import TitlePuzzle from '@/components/TitlePuzzle.vue';
 const pieceColor = ref('#333333')
 const lineColor = ref('#eeeeaa')
 </script>

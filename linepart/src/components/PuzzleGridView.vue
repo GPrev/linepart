@@ -44,9 +44,9 @@
 </style>
 
 <script setup lang="ts">
-import PuzzlePieceView from './PuzzlePieceView.vue';
-import { PuzzleState } from '/src/models/puzzle';
-import { PuzzleTheme } from '/src/models/puzzletheme';
+import PuzzlePieceView from '@/components/PuzzlePieceView.vue';
+import { PuzzleState } from '@/models/puzzle';
+import { type PuzzleTheme } from '@/models/puzzletheme';
 
 const {
   puzzle = null, theme = null, scale = 100, pieceColor = '#ffffff', lineColor = '#000000', isLocked = false, isAnimated = true

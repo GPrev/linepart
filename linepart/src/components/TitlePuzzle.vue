@@ -6,9 +6,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import PuzzleGridView from './PuzzleGridView.vue';
-import { PuzzlePiece, PuzzleState } from '/src/models/puzzle';
-import { PuzzleTheme, PuzzleThemeA } from '/src/models/puzzletheme';
+import PuzzleGridView from '@/components/PuzzleGridView.vue';
+import { PuzzlePiece, PuzzleState } from '@/models/puzzle';
+import { type PuzzleTheme, PuzzleThemeA } from '@/models/puzzletheme';
 
 const puzzle = ref(new PuzzleState([
   [[4, 0, 4, 0], [0, 0, 2, 0], [0, 0, 5, 0], [0, 0, 4, 4], [0, 4, 1, 0], [0, 0, 0, 0]],

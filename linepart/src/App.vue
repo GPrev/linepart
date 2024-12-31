@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { RouterView } from 'vue-router'
-import { RotationPuzzle } from '/src/models/puzzle';
-import { PuzzleThemeA } from '/src/models/puzzletheme';
-import PuzzleGridView from './components/PuzzleGridView.vue';
+import { RotationPuzzle } from '@/models/puzzle';
+import { PuzzleThemeA } from '@/models/puzzletheme';
+import PuzzleGridView from '@/components/PuzzleGridView.vue';
 
 const windowWidth = ref(window.innerWidth)
 const windowHeight = ref(window.innerHeight)

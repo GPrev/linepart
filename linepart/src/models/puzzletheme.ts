@@ -1,4 +1,4 @@
-import { Direction, directions, PuzzlePiece } from './puzzle'
+import { Direction, directions, PuzzlePiece } from '@/models/puzzle'
 
 export class Coordinates {
   x: number

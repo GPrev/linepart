@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { PuzzlePiece } from '../models/puzzle'
-import { Coordinates, CubicCurve, PuzzleThemeA } from '../models/puzzletheme'
+import { PuzzlePiece } from '@/models/puzzle'
+import { Coordinates, CubicCurve, PuzzleThemeA } from '@/models/puzzletheme'
 
 describe('PuzzleThemeA', () => {
   const theme = new PuzzleThemeA()
