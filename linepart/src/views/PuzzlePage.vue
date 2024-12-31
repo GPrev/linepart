@@ -10,7 +10,7 @@
     </div>
     <div :class="[{ ['win']: isSolved }, 'popup-container']">
       <WinBoxView v-if="isSolved" :class="[{ ['win']: isSolved }, 'win-popup']" :theme="theme" :piece-color="pieceColor"
-        :line-color="lineColor" :scale="scale" />
+        :line-color="lineColor" :scale="scale" @new-puzzle-click="newPuzzle()" />
     </div>
   </div>
 </template>
@@ -62,7 +62,11 @@ import WinBoxView from '../components/WinBoxView.vue';
 import { RotationPuzzle } from '/src/models/puzzle';
 import { PuzzleThemeA } from '/src/models/puzzletheme';
 
-const puzzle = ref(RotationPuzzle.makeRandom(3, 3, 8))
+const puzzleWidth = 3
+const puzzleHeight = 3
+const permutations = 8
+
+const puzzle = ref(RotationPuzzle.makeRandom(puzzleWidth, puzzleHeight, permutations))
 const puzzleState = ref(puzzle.value.makeRandomStartingState())
 
 const scale = ref(100)
@@ -71,6 +75,11 @@ const pieceColor = ref('#333333')
 const lineColor = ref('#eeeeaa')
 
 const test = ref(false)
+
+function newPuzzle () {
+  puzzle.value = RotationPuzzle.makeRandom(puzzleWidth, puzzleHeight, permutations)
+  puzzleState.value = puzzle.value.makeRandomStartingState()
+}
 
 const isSolved = computed(() => {
   return puzzleState.value.isSolved();

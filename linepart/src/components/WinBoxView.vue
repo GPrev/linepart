@@ -9,7 +9,7 @@
     <p class="text-h6 ma-xs">Congratulations !</p>
     <p class="ma-none">You did it !</p>
     <div class="win-button-row row content-around">
-      <RouterLink to="/puzzle" class="button">New puzzle</RouterLink>
+      <button class="button" @click="emit('newPuzzleClick')">New puzzle</button>
       <RouterLink to="/" class="button">Main menu</RouterLink>
     </div>
   </div>
@@ -79,4 +79,6 @@ const {
   pieceColor?: string;
   lineColor?: string;
 }>();
+
+const emit = defineEmits(['newPuzzleClick'])
 </script>

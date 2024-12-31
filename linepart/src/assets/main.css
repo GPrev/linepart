@@ -80,6 +80,11 @@
   cursor: pointer;
 }
 
+button.button {
+  font-family: inherit;
+  font-size: inherit;
+}
+
 .button::after {
   content: '';
   position: absolute;
