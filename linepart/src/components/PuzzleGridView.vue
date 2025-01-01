@@ -12,7 +12,7 @@
   grid-auto-rows: v-bind('scale + "px"');
   grid-column-gap: v-bind('scale / 15 + "px"');
   grid-row-gap: v-bind('scale / 15 + "px"');
-  background: dimgray;
+  background: rgba(200, 200, 200, .3);
   padding: v-bind('scale / 10 + "px"');
   border-radius: v-bind('scale / 10 + "px"');
 }
