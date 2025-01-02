@@ -1,5 +1,6 @@
 <template>
-  <div v-if="puzzle" :class="['puzzle', 'shadow', { ['win']: isLocked }]">
+  <div v-if="puzzle"
+    :class="['puzzle', 'shadow', { ['win']: isLocked && isAnimated, ['win-static']: isLocked && !isAnimated }]">
     <PuzzlePieceView v-for="(piece, index) in puzzle.allPieces()" :key="index" :piece="piece" :theme="theme"
       :scale="scale" :piece-color="pieceColor" :line-color="lineColor" :isLocked="isLocked" />
   </div>
@@ -17,13 +18,24 @@
   border-radius: v-bind('scale / 10 + "px"');
 }
 
+.puzzle.win-static {
+  border-radius: 0;
+  padding: 0;
+  grid-column-gap: 0;
+  grid-row-gap: 0;
+}
+
+.puzzle.win-static .piece {
+  border-radius: 0;
+}
+
 .puzzle.win {
-  animation: v-bind('`puzzle-on-win ${(isAnimated ? ".5s" : "0s")} ease-in`');
+  animation: puzzle-on-win .5s 0s;
   animation-fill-mode: forwards;
 }
 
 .puzzle.win .piece {
-  animation: v-bind('`piece-on-win ${(isAnimated ? ".5s" : "0s")} ease-in`');
+  animation: piece-on-win .5s 0s;
   animation-fill-mode: forwards;
 }
 
