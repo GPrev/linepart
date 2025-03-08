@@ -2,12 +2,12 @@ name: Deploy
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: 🛎️ Checkout code
         uses: actions/checkout@v4
@@ -15,18 +15,22 @@ jobs:
       - name: 📦 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '21'
-          cache: 'npm'
-          cache-dependency-path: '**/package-lock.json'
+          node-version: "21"
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
 
       - name: 📥 Install dependencies
         working-directory: linepart
         run: npm install
 
+      - name: 🧪 Test
+        working-directory: linepart
+        run: npm run test:unit
+
       - name: 🏗️ Build
         working-directory: linepart
         run: npm run build
-        
+
       - name: 🚀 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
