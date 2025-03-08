@@ -38,6 +38,14 @@
 .ma-xs {
   margin: 4px 4px;
 }
+.my-sm {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+.mx-md {
+  margin-left: 16px;
+  margin-right: 16px;
+}
 .my-md {
   margin-top: 16px;
   margin-bottom: 16px;
@@ -101,4 +109,10 @@ button.button {
   position: absolute;
   top: 0px;
   left: 0px;
+}
+
+.bottomright {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
 }

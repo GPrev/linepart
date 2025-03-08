@@ -5,6 +5,7 @@
     <div class="spacer" />
     <RouterLink to="/puzzle" class="button">
       Play</RouterLink>
+    <div class="bottomright my-sm mx-md">Version {{ version }}</div>
   </div>
 </template>
 
@@ -18,6 +19,8 @@
 import { ref } from 'vue';
 import TitlePuzzle from '@/components/TitlePuzzle.vue';
 import PwaInstallButton from '@/components/PwaInstallButton.vue';
+
+const version = __APP_VERSION__
 const pieceColor = ref('#333333')
 const lineColor = ref('#eeeeaa')
 </script>
