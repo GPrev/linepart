@@ -3,8 +3,11 @@ import {
   Direction,
   PuzzlePiece,
   PuzzleState,
+  RotationPuzzleState,
   RotationPuzzle,
 } from '@/models/puzzle'
+
+const nb_different_edges = 8
 
 describe('PuzzlePiece', () => {
   it('should rotate', () => {
@@ -23,11 +26,10 @@ describe('PuzzlePiece', () => {
 describe('PuzzleState', () => {
   const width = 6
   const height = 8
-  const nbDiffEdges = 7
   const pieceNumber = width * height
 
   it('should have all pieces', () => {
-    const puzzle = PuzzleState.makeSolved(width, height, nbDiffEdges)
+    const puzzle = PuzzleState.makeSolved(width, height, nb_different_edges)
     let count = 0
     const it = puzzle.allPieces()
     while (!it.next().done) count++
@@ -35,14 +37,109 @@ describe('PuzzleState', () => {
   })
 })
 
+describe('RotationPuzzleState', () => {
+  it.each([
+    [0, 0],
+    [1, 4],
+    [2, 2],
+    [3, 6],
+    [4, 1],
+    [5, 5],
+    [6, 3],
+    [7, 7],
+  ])("should find the match for '%s'", (value: number, expected: number) => {
+    expect(RotationPuzzleState.getEdgeMatch(value, nb_different_edges)).toBe(
+      expected,
+    )
+  })
+
+  it('should check if solved, horizontally', () => {
+    for (const link of [1, 3, 4, 6]) {
+      for (const other of [0, 2, 5]) {
+        const puzzleState = new RotationPuzzleState(
+          [
+            [
+              [other, other, other, link],
+              [other, link, other, link],
+            ],
+          ].map(r =>
+            r.map(
+              p =>
+                new PuzzlePiece(
+                  p[Direction.UP],
+                  p[Direction.LEFT],
+                  p[Direction.DOWN],
+                  p[Direction.RIGHT],
+                ),
+            ),
+          ),
+          nb_different_edges,
+          true,
+        )
+
+        expect(
+          puzzleState.isSolved(),
+          `Puzzle should be solved : left = ${puzzleState.pieces[0][0].right()}, right = ${puzzleState.pieces[0][1].left()}`,
+        ).toBeTruthy()
+
+        for (const rotation of [1, 2, 3]) {
+          puzzleState.pieces[0][1].setRotation(rotation)
+
+          expect(
+            puzzleState.isSolved(),
+            `Puzzle should NOT be solved : left = ${puzzleState.pieces[0][0].right()}, right = ${puzzleState.pieces[0][1].left()}`,
+          ).toBeFalsy()
+        }
+      }
+    }
+  })
+
+  it('should check if solved, vertically', () => {
+    for (const link of [1, 3, 4, 6]) {
+      for (const other of [0, 2, 5]) {
+        // prettier-ignore
+        const puzzleState = new RotationPuzzleState(
+          [
+            [[other, other, link, other]],
+            [[link, other, link, other]],
+          ].map(r =>
+            r.map(
+              p =>
+                new PuzzlePiece(
+                  p[Direction.UP],
+                  p[Direction.LEFT],
+                  p[Direction.DOWN],
+                  p[Direction.RIGHT],
+                ),
+            ),
+          ),
+          nb_different_edges,
+          true
+        )
+        expect(
+          puzzleState.isSolved(),
+          `Puzzle should be solved : down = ${puzzleState.pieces[0][0].down()}, up = ${puzzleState.pieces[1][0].up()}`,
+        ).toBeTruthy()
+
+        for (const rotation of [1, 2, 3]) {
+          puzzleState.pieces[1][0].setRotation(rotation)
+          expect(
+            puzzleState.isSolved(),
+            `Puzzle should NOT be solved : down = ${puzzleState.pieces[0][0].down()}, up = ${puzzleState.pieces[1][0].up()}`,
+          ).toBeFalsy()
+        }
+      }
+    }
+  })
+})
+
 describe('RotationPuzzle', () => {
   const width = 6
   const height = 8
-  const nbDiffEdges = 7
   const edgeNumber = width * height * 4
 
   it('should make a valid puzzle', () => {
-    const puzzle = RotationPuzzle.makeRandom(width, height, nbDiffEdges)
+    const puzzle = RotationPuzzle.makeRandom(width, height, nb_different_edges)
     // Should be the right size
     expect(puzzle.solution.height()).toBe(height)
     expect(puzzle.solution.width()).toBe(width)
@@ -69,13 +166,13 @@ describe('RotationPuzzle', () => {
       }),
     )
     // Should have almost all edge numbers
-    expect(edgeCountPerValue.size).toBeGreaterThan(nbDiffEdges - 3)
+    expect(edgeCountPerValue.size).toBeGreaterThan(nb_different_edges - 3)
 
     let sum = 0
     for (const [key, value] of edgeCountPerValue) {
       // Validate that we counted correctly
-      expect(key).toBeLessThan(nbDiffEdges + 1)
-      expect(key).toBeGreaterThan(0)
+      expect(key).toBeLessThan(nb_different_edges)
+      expect(key).toBeGreaterThanOrEqual(0)
       expect(value).toBeGreaterThan(0)
       expect(value).toBeLessThan(edgeNumber)
       sum += value
@@ -85,7 +182,7 @@ describe('RotationPuzzle', () => {
   })
 
   it('should check if solved', () => {
-    const puzzle = RotationPuzzle.makeRandom(width, height, nbDiffEdges)
+    const puzzle = RotationPuzzle.makeRandom(width, height, nb_different_edges)
     expect(puzzle.solution.isSolved()).toBeTruthy()
     let notSolved = puzzle.solution.copy()
     // Values intentionnaly too big, can't be correct
@@ -105,9 +202,10 @@ describe('RotationPuzzle', () => {
   })
 
   it('should randomize', () => {
-    const puzzle = RotationPuzzle.makeRandom(width, height, nbDiffEdges)
-    const solution = puzzle.solution
-    const startState = puzzle.makeRandomStartingState()
+    const puzzle = RotationPuzzle.makeRandom(width, height, nb_different_edges)
+    const solution = puzzle.solution as RotationPuzzleState
+    const startState = puzzle.makeRandomStartingState() as RotationPuzzleState
+
     expect(startState.isSolved()).toBeFalsy()
 
     const rotationCount = new Map<number, number>()

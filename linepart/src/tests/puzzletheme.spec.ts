@@ -18,6 +18,7 @@ describe('PuzzleThemeA', () => {
       ),
     )
   })
+
   it('should make curves', () => {
     const piece = new PuzzlePiece(2, 2, 0, 0)
     const svg = theme.toSvg(piece)
@@ -31,8 +32,9 @@ describe('PuzzleThemeA', () => {
       ),
     )
   })
+
   it('should make corners', () => {
-    const piece = new PuzzlePiece(1, 1, 0, 0)
+    const piece = new PuzzlePiece(4, 1, 0, 0)
     const svg = theme.toSvg(piece)
     expect(svg.cubicCurves).toHaveLength(1)
     expect(svg.cubicCurves[0]).toEqual(
@@ -44,8 +46,9 @@ describe('PuzzleThemeA', () => {
       ),
     )
   })
+
   it('should make complex shapes', () => {
-    const piece = new PuzzlePiece(2, 5, 7, 6)
+    const piece = new PuzzlePiece(2, 5, 7, 3)
     const svg = theme.toSvg(piece)
     expect(svg.cubicCurves).toHaveLength(4)
     for (const curve of [

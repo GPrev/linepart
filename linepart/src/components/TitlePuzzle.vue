@@ -7,15 +7,16 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import PuzzleGridView from '@/components/PuzzleGridView.vue';
-import { PuzzlePiece, PuzzleState } from '@/models/puzzle';
+import { PuzzlePiece, RotationPuzzleState } from '@/models/puzzle';
 import { type PuzzleTheme, PuzzleThemeA } from '@/models/puzzletheme';
 
-const puzzle = ref(new PuzzleState([
+const nb_different_edges = 8
+const puzzle = ref(new RotationPuzzleState([
   [[4, 0, 4, 0], [0, 0, 2, 0], [0, 0, 5, 0], [0, 0, 4, 4], [0, 4, 1, 0], [0, 0, 0, 0]],
   [[4, 0, 0, 4], [2, 0, 2, 0], [5, 0, 5, 0], [4, 0, 0, 4], [1, 5, 0, 0], [0, 0, 0, 0]],
   [[0, 0, 4, 2], [0, 2, 2, 0], [0, 0, 1, 2], [0, 2, 5, 2], [0, 2, 2, 0], [0, 4, 0, 4]],
   [[4, 0, 4, 0], [2, 2, 0, 0], [1, 0, 1, 2], [5, 0, 5, 0], [2, 3, 2, 0], [2, 0, 2, 0]],
-].map(r => r.map(p => new PuzzlePiece(...p))))
+].map(r => r.map(p => new PuzzlePiece(...p))), nb_different_edges, true)
 )
 
 const {
