@@ -42,7 +42,7 @@ const puzzleState = computed(() => {
       :line-color="lineColor" :is-locked="true" :is-animated="false" />
   </div>
   <div class="main-container">
-    <RouterView />
+    <RouterView :key="$route.fullPath" />
   </div>
 </template>
 

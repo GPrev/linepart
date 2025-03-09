@@ -16,6 +16,7 @@ const router = createRouter({
       // this generates a separate chunk for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/PuzzlePage.vue'),
+      props: route => ({ tutorial: Number(route.query.tutorial) }),
     },
   ],
 })

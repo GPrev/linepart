@@ -1,5 +1,5 @@
 <template>
-  <div class="winbox my-md shadow">
+  <div class="winbox shadow">
     <svg class="win-svg left">
       <path d="M 20 0 C 20 60 100 90 100 150" />
     </svg>
@@ -9,7 +9,7 @@
     <p class="text-h6 ma-xs">Congratulations !</p>
     <p class="ma-none">You did it !</p>
     <div class="win-button-row row content-around">
-      <button class="button" @click="emit('newPuzzleClick')">New puzzle</button>
+      <button class="button" @click="emit('newPuzzleClick')">{{ newPuzzleText }}</button>
       <RouterLink to="/" class="button">Main menu</RouterLink>
     </div>
   </div>
@@ -73,11 +73,12 @@
 
 <script setup lang="ts">
 const {
-  scale = 100, pieceColor = '#ffffff', lineColor = '#000000'
+  scale = 100, pieceColor = '#ffffff', lineColor = '#000000', newPuzzleText = 'New puzzle'
 } = defineProps<{
   scale?: number;
   pieceColor?: string;
   lineColor?: string;
+  newPuzzleText?: string;
 }>();
 
 const emit = defineEmits(['newPuzzleClick'])

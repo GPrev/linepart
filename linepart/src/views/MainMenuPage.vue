@@ -5,6 +5,9 @@
     <div class="spacer" />
     <RouterLink to="/puzzle" class="button">
       Play</RouterLink>
+    <div class="smallspacer" />
+    <RouterLink to="/puzzle?tutorial=0" class="button">
+      How to Play</RouterLink>
     <div class="bottomright my-sm mx-md">Version {{ version }}</div>
   </div>
 </template>
@@ -12,6 +15,10 @@
 <style lang="css">
 .spacer {
   padding: 1em;
+}
+
+.smallspacer {
+  padding: 0.5em;
 }
 </style>
 
