@@ -2,7 +2,7 @@
   <div class="column content-center justify-center items-center">
     <RouterLink to="/" class=" round button topleft ma-xs">◀</RouterLink>
     <div v-if="isTutorial" class="tutorial-box ma-lg">
-      <span class="tutorial-i">&#x1F6C8;</span>
+      <span class="tutorial-i">i</span>
       <span class="tutorial-text">{{ tutorialText[tutorial] }}</span>
     </div>
     <PuzzleGridView :puzzle="puzzleState" :theme="theme" :scale="scale" :piece-color="pieceColor"
@@ -33,9 +33,16 @@
 }
 
 .tutorial-i {
-  font-size: 25px;
-  line-height: 15px;
-  translate: -3px 3px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  flex-shrink: 0;
+  margin-top: 3px;
+  font-weight: bold;
+  text-align: center;
+  color: v-bind('pieceColor');
+  background-color: v-bind('lineColor');
+  border-radius: 50%;
 }
 
 .tutorial-text {
