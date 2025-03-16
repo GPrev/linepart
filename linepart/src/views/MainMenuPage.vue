@@ -4,11 +4,11 @@
     <TitlePuzzle :piece-color="pieceColor" :line-color="lineColor" />
     <div class="spacer" />
     <RouterLink to="/puzzle" class="button">
-      Play</RouterLink>
+      {{ $t("home.play") }}</RouterLink>
     <div class="smallspacer" />
     <RouterLink to="/puzzle?tutorial=0" class="button">
-      How to Play</RouterLink>
-    <div class="bottomright my-sm mx-md">Version {{ version }}</div>
+      {{ $t("home.tutorial") }}</RouterLink>
+    <div class="bottomright my-sm mx-md">{{ $t("home.version", { version: version }) }}</div>
   </div>
 </template>
 

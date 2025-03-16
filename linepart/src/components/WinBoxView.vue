@@ -6,11 +6,11 @@
     <svg class="win-svg right">
       <path d="M 20 0 C 20 60 100 90 100 150" />
     </svg>
-    <p class="text-h6 ma-xs">Congratulations !</p>
-    <p class="ma-none">You did it !</p>
+    <p class="text-h6 ma-xs">{{ $t("win.congrats_title") }}</p>
+    <p class="ma-none">{{ $t("win.congrats_subtitle") }}</p>
     <div class="win-button-row row content-around">
-      <button class="button" @click="emit('newPuzzleClick')">{{ newPuzzleText }}</button>
-      <RouterLink to="/" class="button">Main menu</RouterLink>
+      <button class="button" @click="emit('newPuzzleClick')">{{ newPuzzleText || $t("win.again") }}</button>
+      <RouterLink to="/" class="button">{{ $t("win.home") }}</RouterLink>
     </div>
   </div>
 </template>
@@ -73,7 +73,7 @@
 
 <script setup lang="ts">
 const {
-  scale = 100, pieceColor = '#ffffff', lineColor = '#000000', newPuzzleText = 'New puzzle'
+  scale = 100, pieceColor = '#ffffff', lineColor = '#000000', newPuzzleText = undefined
 } = defineProps<{
   scale?: number;
   pieceColor?: string;

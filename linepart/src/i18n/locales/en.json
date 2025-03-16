@@ -1,0 +1,20 @@
+{
+  "home": {
+    "play": "Play",
+    "tutorial": "How to Play",
+    "version": "Version {version}"
+  },
+  "win": {
+    "congrats_title": "Congratulations !",
+    "congrats_subtitle": "You did it !",
+    "home": "Main menu",
+    "again": "New puzzle"
+  },
+  "tutorial": {
+    "tutorial_0": "Touch the tiles to rotate them, and connect the lines.",
+    "tutorial_1": "Lines leaving the edge of the puzzle are allowed.\nJust connect the lines in between tiles.",
+    "tutorial_2": "Tiles that match might still be in the wrong position.",
+    "next": "Next Tutorial",
+    "done": "Start playing"
+  }
+}

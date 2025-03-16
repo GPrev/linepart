@@ -3,7 +3,7 @@
     <RouterLink to="/" class=" round button topleft ma-xs">◀</RouterLink>
     <div v-if="isTutorial" class="tutorial-box ma-lg">
       <span class="tutorial-i">i</span>
-      <span class="tutorial-text">{{ tutorialText[tutorial] }}</span>
+      <span class="tutorial-text">{{ $t(`tutorial.tutorial_${tutorial}`) }}</span>
     </div>
     <PuzzleGridView :puzzle="puzzleState" :theme="theme" :scale="scale" :piece-color="pieceColor"
       :line-color="lineColor" :isLocked="isSolved" />
@@ -15,7 +15,7 @@
     <div :class="[{ ['win']: isSolved }, 'popup-container']">
       <WinBoxView v-if="isSolved" :class="[{ ['win']: isSolved }, 'win-popup', 'my-lg']" :theme="theme"
         :piece-color="pieceColor" :line-color="lineColor" :scale="scale"
-        :new-puzzle-text="isTutorial ? (lastTutorial ? 'Start playing' : 'Next Tutorial') : undefined"
+        :new-puzzle-text="isTutorial ? (lastTutorial ? $t('tutorial.done') : $t('tutorial.next')) : undefined"
         @new-puzzle-click="newPuzzle()" />
     </div>
   </div>
@@ -116,12 +116,6 @@ const {
 } = defineProps<{
   tutorial?: number
 }>()
-
-const tutorialText = [
-  "Touch the tiles to rotate them, and connect the lines.",
-  "Lines leaving the edge of the puzzle are allowed.\nJust connect the lines in between tiles.",
-  "Tiles that match might still be in the wrong position.",
-]
 
 const tutorialPuzzles = [
   [[[2, 0, 0, 0], [0, 0, 2, 0]]],
