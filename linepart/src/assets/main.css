@@ -114,6 +114,12 @@ button.button {
   left: 0px;
 }
 
+.topright {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
 .bottomright {
   position: absolute;
   bottom: 0px;

@@ -4,6 +4,7 @@ import { RouterView } from 'vue-router'
 import { RotationPuzzle } from '@/models/puzzle';
 import { PuzzleThemeA } from '@/models/puzzletheme';
 import PuzzleGridView from '@/components/PuzzleGridView.vue';
+import LanguageSelector from '@/components/LanguageSelector.vue';
 
 const windowWidth = ref(window.innerWidth)
 const windowHeight = ref(window.innerHeight)
@@ -42,6 +43,7 @@ const puzzleState = computed(() => {
       :line-color="lineColor" :is-locked="true" :is-animated="false" />
   </div>
   <div class="main-container">
+    <LanguageSelector class="topright" />
     <RouterView :key="$route.fullPath" />
   </div>
 </template>
