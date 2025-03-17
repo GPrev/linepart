@@ -1,5 +1,5 @@
 <template>
-  <div class="custom-select" @click="() => dropdownOpen = !dropdownOpen">
+  <div class="custom-select" @click.stop="() => dropdownOpen = !dropdownOpen">
     <div class="selection">
       <div class="custom-option" :class="['flag', localemanager.currentLocale]" />
     </div>
@@ -66,7 +66,7 @@
 </style>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onBeforeUnmount, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { LocaleManager } from '@/i18n/localemanager'
 
@@ -76,4 +76,12 @@ const localemanager = new LocaleManager(i18n)
 localemanager.currentLocale = localemanager.getPreferredLocale()
 
 const dropdownOpen = ref(false)
+
+// When clicking outside the dropdown, close the dropdown
+onBeforeUnmount(() => {
+  document.removeEventListener('click', () => dropdownOpen.value = false)
+})
+onMounted(() => {
+  document.addEventListener('click', () => dropdownOpen.value = false)
+})
 </script>
