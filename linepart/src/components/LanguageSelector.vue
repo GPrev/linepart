@@ -1,11 +1,12 @@
 <template>
   <div class="custom-select" @click="() => dropdownOpen = !dropdownOpen">
     <div class="selection">
-      <div class="custom-option" :class="['flag', i18n.locale.value]" />
+      <div class="custom-option" :class="['flag', localemanager.currentLocale]" />
     </div>
     <div v-if="dropdownOpen" class="dropdown">
-      <div v-for="locale in i18n.availableLocales.filter(l => l != i18n.locale.value)" :key="`locale-${locale}`"
-        class="custom-option" :class="['flag', locale]" @click="() => { i18n.locale.value = locale }" />
+      <div v-for="locale in localemanager.getAvailableLocales().filter(l => l != localemanager.currentLocale)"
+        :key="`locale-${locale}`" class="custom-option" :class="['flag', locale]"
+        @click="() => { localemanager.currentLocale = locale }" />
     </div>
   </div>
 </template>
@@ -65,9 +66,14 @@
 </style>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { LocaleManager } from '@/i18n/localemanager'
 
+// Sets the locale according to user preference
 const i18n = useI18n()
+const localemanager = new LocaleManager(i18n)
+localemanager.currentLocale = localemanager.getPreferredLocale()
+
 const dropdownOpen = ref(false)
 </script>
