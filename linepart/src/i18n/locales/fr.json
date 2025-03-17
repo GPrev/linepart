@@ -7,14 +7,14 @@
   "win": {
     "congrats_title": "Bravo !",
     "congrats_subtitle": "Vous avez résolu le puzzle !",
-    "home": "Menu principal",
+    "home": "Menu",
     "again": "Nouveau puzzle"
   },
   "tutorial": {
     "tutorial_0": "Touchez les tuiles pour les faire tourner, et connecter les lignes.",
-    "tutorial_1": "Les lignes peuvent quitter le bord du puzzle.\nConnectez simplement les lignes entre les tuiles.",
+    "tutorial_1": "Les lignes peuvent quitter le puzzle par les bords.\nConnectez simplement les lignes entre les tuiles.",
     "tutorial_2": "Des tuiles connectées peuvent quand même être dans une mauvaise position.",
-    "next": "Tutoriel suivant",
-    "done": "Commencer à jouer"
+    "next": "Suivant",
+    "done": "Jouer"
   }
 }
